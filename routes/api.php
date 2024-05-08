@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ResponsavelController;
-use App\Models\Responsavel;
+use App\Services\Autenticacao\LoginService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,5 +10,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::apiResource("responsavel",ResponsavelController::class);
-Route::put("alterarsenha/{id}",[ResponsavelController::class, "alterasenha"]);
+
+Route::post('/login', function (Request $request) {
+   return ["token" =>  LoginService::fazLogin($request->input("email_cpf"),$request->input("senha"))];
+});
+
+
+Route::apiResource("responsavel",ResponsavelController::class)->middleware('auth:sanctum');
+Route::put("alterarsenha/{id}",[ResponsavelController::class, "alterasenha"])->middleware('auth:sanctum');
