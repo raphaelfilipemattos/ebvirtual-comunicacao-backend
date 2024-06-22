@@ -4,7 +4,6 @@ namespace App\Services\Autenticacao;
 use App\Models\User;
 use Exception;
 use App\Models\Responsavel;
-use App\Models\PersonalAccessToken;
 
 class LoginService
 {
@@ -25,22 +24,23 @@ class LoginService
         }
 
         if ($responsavel->senha !== $senhaCript ){
-            throw new Exception("Usuário ou senha incorreta");
+            throw new Exception("Usuário ou senha incorreta(2)");
         }
         $user = new User($responsavel->toArray());
         
         return $user->createToken($responsavel->email)->plainTextToken;
     }
 
-    public static function criptografaSenha($senha, $senha2){
+    public static function criptografaSenha(string $senha, string $senha2){
         $senha =  $senha;
         $senha2 =  $senha2;
         if ($senha !== $senha2){
             throw new Exception("As senhas não conferem");
         }
-
-        if (strlen($senha) < 8) {
-           throw new Exception("As senha deve ter ao menos 8 dígitos");
+       
+        $tamanho = strlen($senha);        
+        if ( $tamanho < 8 )  {        
+           throw new Exception("As senha deve ter ao menos 8 dígitos!");
         }
     
         // Verifica se a senha contém caracteres especiais

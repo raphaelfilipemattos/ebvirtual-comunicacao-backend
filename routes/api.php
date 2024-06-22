@@ -18,3 +18,6 @@ Route::post('/login', function (Request $request) {
 
 Route::apiResource("responsavel",ResponsavelController::class)->middleware('auth:sanctum');
 Route::put("alterarsenha/{id}",[ResponsavelController::class, "alterasenha"])->middleware('auth:sanctum');
+Route::post("vinculaaluno",[ResponsavelController::class, "vinculaAluno"])->middleware('auth:sanctum');
+Route::delete("desvinculaaluno/{id}",[ResponsavelController::class, "desvinculaAluno"])->middleware('auth:sanctum');
+Route::get("parentescos",[ResponsavelController::class, "listaParenescos"]);

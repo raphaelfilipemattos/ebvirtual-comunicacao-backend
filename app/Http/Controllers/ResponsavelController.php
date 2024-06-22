@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\Responsavel\ResponsavelService;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,22 @@ class ResponsavelController extends Controller
                                                       $request->input("senha"),
                                                       $request->input("senha2"));
     }
+
+    public function vinculaAluno(Request $request){
+        $idresonsavel = (int) User::getUsuarioLogado()->idresponsavel;        
+        return $this->responsavelService->vinculaAluno($idresonsavel,
+                                                       $request->input("cpf_aluno"),
+                                                       $request->input("parentesco"));
+    }
+
+    public function desvinculaAluno($vinculo){        
+        return $this->responsavelService->desvinculaAluno($vinculo);
+    }
+
+    public function listaParenescos(){        
+        return $this->responsavelService->listParentesco();
+    }
+
 
 
 }
